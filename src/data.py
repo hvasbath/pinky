@@ -10,6 +10,10 @@ from pyrocko.gf.seismosizer import Engine, Target, LocalEngine, Source
 from pyrocko import orthodrome
 from pyrocko import pile
 
+from beat.heart import seis_synthetics, get_phase_arrival_time, \
+                       ArrivalTaper, Filter
+from beat.utility import list2string
+
 from collections import defaultdict, OrderedDict
 from functools import lru_cache, partialmethod, partial
 from pyrocko import util
@@ -773,6 +777,130 @@ class PileData(DataGenerator):
 
                 label = self.extract_labels(m)
                 yield chunk, label
+
+def stations_to_targets_channels(stations, channels):
+    targets = []
+    for s in stations:
+        targets.extend(
+            [Target(codes=(s.network, s.station, s.location, c),
+                lat=s.lat, lon=s.lon) for c in
+                channels])
+
+    return targets
+
+
+class SynthesizerData(DataGenerator):
+
+    fn_source_config = String.T(
+            help='filename containing sourc_config instances')
+
+    store_id = String.T(optional=True)
+    center_sources = Bool.T(
+            default=False,
+            help='Transform the center of sources to the center of stations')
+    filterer = Filter.T()
+    taperer = ArrivalTaper.T()
+    wavename = String.T(help='Tabulated phase as in defined in store')
+
+    channels = List.T(String.T())
+    engine = LocalEngine.T()
+    onset_phase = String.T(default='first(p|P)')
+    reftime = String.T(
+        help='Reference time for response files shift of event times wrt that,'
+             'format: YYYY-MM-TT HH:MM:SS')
+
+    arrival_times_std = Float.T(
+        help='Standard deviation for noise arrival time.',
+        optional=True)
+    convolve_instrument_respones = Bool.T(default=False)
+
+    def setup(self):
+        self.source_config = guts.load(filename=self.fn_sources)
+        if len(self.sources) > 1:
+            raise ValueError('So far only single sources supported!')
+
+        if self.store_id:
+            for t in self.config.targets:
+                t.store_id = self.store_id
+
+        if self.convolve_instrument_respones:
+            from pyrocko.io import stationxml
+            fdsn = stationxml.load_xml(filename=self.config.fn_stations)
+            stations = fdsn.get_pyrocko_stations()
+            targets = stations_to_targets_channels(
+                stations, channels=self.channels)
+
+            for target in targets:
+                try:
+                    target.response = fdsn.get_pyrocko_response(
+                        target.codes, time=self.reftime)
+                except stationxml.NoResponseInformation:
+                    raise stationxml.NoResponseInformation(
+                        'No response! for target: %s' % list2string(
+                            target.codes))
+
+        self.config.targets = targets
+        # self.config.channels = [t.codes for t in self.config.targets]
+        store_ids = [t.store_id for t in self.config.targets]
+        store_id = set(store_ids)
+        assert len(store_id) == 1, 'More than one store used. Not \
+                 implemented yet'
+
+        self.store = self.engine.get_store(store_id.pop())
+
+        #dt = self.config.deltat_want or self.store.config.deltat
+        #self.n_samples = int(
+        #    (self.config.sample_length + self.config.tpad) / dt)
+
+    @property
+    def ntargets(self):
+        return len(self.config.targets)
+
+    @property
+    def source(self):
+        return self.source_config.source
+
+    def update_source_randomly(self):
+        d = self.source_config.get_uniform_random()
+        self.source_config.source.update(**d)
+
+    def extract_labels(self, source):
+        if not self.labeled:
+            return UNLABELED
+        return (
+            source.north_shift, source.east_shift, source.depth,
+            source.time, source.magnitude,
+            source.u, source.v, source.kappa, source.sigma, source.h)
+
+    def iter_examples_and_labels(self):
+
+        self.update_source_randomly()
+
+        arrival_times_tracing = num.array(
+            [get_phase_arrival_time(
+                engine=self.engine, source=self.sources[0],
+                target=target, wavename=wavename)
+                for target in self.config.targets])
+
+
+        if self.arrival_times_std:
+            arrival_times += num.random.normal(
+                scale=self.arrival_times_std, size=self.ntargets)
+
+        arrival_times = num.ones(self.ntargets, dtype='float64') * \
+                        arrival_times_tracing.min()
+
+        chunk = seis_synthetics(
+            self.engine, self.sources, self.config.targets,
+            arrival_taper=self.taperer,
+            wavename=self.wavename, filterer=self.filterer,
+            plot=False, nprocs=1, outmode='array',
+            pre_stack_cut=False, taper_tolerance_factor=0.,
+            arrival_times=arrival_times, chop_bounds=['b', 'c'])
+
+        label = self.extract_labels(self.sources[0])
+
+        yield chunk, label
 
 
 class SeismosizerData(DataGenerator):
