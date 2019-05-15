@@ -15,8 +15,8 @@ from skopt.plots import plot_convergence, plot_objective
 from skopt.plots import plot_objective, plot_evaluations
 from pyrocko.guts import Object, Int, Float, List, Tuple, String
 
-from .util import delete_if_exists, ensure_dir
-from .data import name_to_class
+from pinky.util import delete_if_exists, ensure_dir
+from pinky.data import name_to_class
 
 
 try:

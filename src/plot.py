@@ -17,7 +17,7 @@ import numpy as num
 import logging
 from scipy import stats
 from collections import defaultdict
-from .util import snr
+from pinky.util import snr
 
 logger = logging.getLogger('pinky.plot')
 

@@ -6,13 +6,15 @@ from pyrocko.model import load_events, Event
 from pyrocko import guts
 from pyrocko.guts import Object, String, Int, Float, Tuple, Bool, Dict, List
 from pyrocko.gui import marker
-from pyrocko.gf.seismosizer import Engine, Target, LocalEngine, Source
+from pyrocko.gf.seismosizer import Engine, Target, LocalEngine, Source, Range
 from pyrocko import orthodrome
 from pyrocko import pile
 
 from beat.heart import seis_synthetics, get_phase_arrival_time, \
                        ArrivalTaper, Filter
-from beat.utility import list2string
+from beat.utility import list2string, weed_input_rvs, get_random_uniform
+from beat.config import default_bounds
+from beat.sources import MTQTSource
 
 from collections import defaultdict, OrderedDict
 from functools import lru_cache, partialmethod, partial
@@ -26,8 +28,8 @@ import glob
 import sys
 import copy
 
-from .tf_util import _FloatFeature, _Int64Feature, _BytesFeature
-from .util import delete_if_exists, first_element, filter_oob, ensure_list, snr
+from pinky.tf_util import _FloatFeature, _Int64Feature, _BytesFeature
+from pinky.util import delete_if_exists, first_element, filter_oob, ensure_list, snr
 
 
 pjoin = os.path.join
@@ -789,23 +791,53 @@ def stations_to_targets_channels(stations, channels):
     return targets
 
 
+
+class SourceConfig(Object):
+
+    ranges = Dict.T(String.T(), Range.T(), default={})
+    source = Source.T(default=MTQTSource.D())
+    datatype = String.T(default='seismic')
+
+    def set_ranges(self):
+        if self.source:
+            svars = set(self.source.keys())
+
+        variables = weed_input_rvs(
+            svars, 'geometry', self.datatype)
+
+        for variable in variables:
+            self.ranges[variable](Range(*default_bounds[variable]))
+
+    def get_uniform_random(self):
+        d = {}
+        for variable, bound in self.ranges.items():
+            d[variable] = get_random_uniform(
+                bound.start, bound.stop, dimension=1)
+
+        return d
+
+
 class SynthesizerData(DataGenerator):
 
     fn_source_config = String.T(
-            help='filename containing sourc_config instances')
-
+        optional=True,
+        help='filename containing source_config instances')
+    source_config = SourceConfig.T(
+        default=SourceConfig.D(),
+        help='Configuration of Source objects')
     store_id = String.T(optional=True)
     center_sources = Bool.T(
-            default=False,
-            help='Transform the center of sources to the center of stations')
-    filterer = Filter.T()
-    taperer = ArrivalTaper.T()
-    wavename = String.T(help='Tabulated phase as in defined in store')
+        default=False,
+        help='Transform the center of sources to the center of stations')
+    filterer = Filter.T(default=Filter.D())
+    taperer = ArrivalTaper.T(default=ArrivalTaper.D())
+    wavename = String.T(help='Tabulated phase as defined in store')
 
     channels = List.T(String.T())
-    engine = LocalEngine.T()
+    store_superdirs = String.T(default='')
     onset_phase = String.T(default='first(p|P)')
     reftime = String.T(
+        optional=True,
         help='Reference time for response files shift of event times wrt that,'
              'format: YYYY-MM-TT HH:MM:SS')
 
@@ -814,8 +846,17 @@ class SynthesizerData(DataGenerator):
         optional=True)
     convolve_instrument_respones = Bool.T(default=False)
 
+    def __init__(self, *args, **kwargs):
+
+        super(SynthesizerData, self).__init__(*args, **kwargs)
+
     def setup(self):
-        self.source_config = guts.load(filename=self.fn_sources)
+        if self.fn_source_config:
+            logger.info('Loading stored config')
+            self.source_config = guts.load(filename=self.fn_source_config)
+        else:
+            logger.info('Using default config!')
+
         if len(self.sources) > 1:
             raise ValueError('So far only single sources supported!')
 
@@ -823,13 +864,14 @@ class SynthesizerData(DataGenerator):
             for t in self.config.targets:
                 t.store_id = self.store_id
 
-        if self.convolve_instrument_respones:
-            from pyrocko.io import stationxml
-            fdsn = stationxml.load_xml(filename=self.config.fn_stations)
-            stations = fdsn.get_pyrocko_stations()
-            targets = stations_to_targets_channels(
-                stations, channels=self.channels)
+        self.engine = LocalEngine(store_superdirs=[self.store_superdirs])
+        from pyrocko.io import stationxml
+        fdsn = stationxml.load_xml(filename=self.config.fn_stations)
+        stations = fdsn.get_pyrocko_stations()
+        targets = stations_to_targets_channels(
+            stations, channels=self.channels)
 
+        if self.convolve_instrument_respones:
             for target in targets:
                 try:
                     target.response = fdsn.get_pyrocko_response(

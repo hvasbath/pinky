@@ -3,14 +3,10 @@ import logging
 import tensorflow as tf
 import numpy as num
 
-from beat.utility import weed_input_rvs, get_random_uniform
-from beat.config import default_bounds
-from beat.sources import MTQTSource
-
-from pyrocko.guts import Object, Float, Int, String, Bool, List, Tuple, Dict
+from pyrocko.guts import Object, Float, Int, String, Bool, List, Tuple
 from pyrocko.pile import make_pile
 from pyrocko.model import load_stations
-from pyrocko.gf.seismosizer import Target, Range, Source
+from pyrocko.gf.seismosizer import Target
 
 from .data import Noise, Normalization, DataGeneratorBase, Imputation
 from .data import ImputationZero, ChannelStackGenerator
@@ -199,28 +195,3 @@ class PinkyConfig(Object):
     @property
     def tensor_shape(self):
         return (self.n_channels, self._n_samples)
-
-
-class SourceConfig(Object):
-
-    ranges = Dict.T(String.T(), Range.T(), default={})
-    source = Source.T(default=MTQTSource.D())
-    datatype = String.T(default='seismic')
-
-    def set_ranges(self):
-        if self.source:
-            svars = set(self.source.keys())
-
-        variables = weed_input_rvs(
-            svars, 'geometry', self.datatype)
-
-        for variable in variables:
-            self.ranges[variable](Range(*default_bounds[variable]))
-
-    def get_uniform_random(self):
-        d = {}
-        for variable, bound in self.ranges.items():
-            d[variable] = get_random_uniform(
-                bound.start, bound.stop, dimension=1)
-
-        return d

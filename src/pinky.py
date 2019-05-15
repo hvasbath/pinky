@@ -4,8 +4,8 @@ import sys
 import glob
 
 from pyrocko import guts
-from .model import Model
-from .data import DataGeneratorBase
+from pinky.model import Model
+from pinky.data import DataGeneratorBase
 
 logger = logging.getLogger('pinky')
 

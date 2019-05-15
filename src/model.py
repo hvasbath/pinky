@@ -1,9 +1,9 @@
-from .data import *
-from .tf_util import *
-from .util import delete_if_exists, ensure_dir
-from .config import PinkyConfig
-from .optimize import Optimizer
-from . import plot
+from pinky.data import *
+from pinky.tf_util import *
+from pinky.util import delete_if_exists, ensure_dir
+from pinky.config import PinkyConfig
+from pinky.optimize import Optimizer
+from pinky import plot
 
 import functools
 import tensorflow as tf
