@@ -857,22 +857,16 @@ class SynthesizerData(DataGenerator):
         else:
             logger.info('Using default config!')
 
-        if len(self.sources) > 1:
-            raise ValueError('So far only single sources supported!')
-
         if self.store_id:
             for t in self.config.targets:
                 t.store_id = self.store_id
 
         self.engine = LocalEngine(store_superdirs=[self.store_superdirs])
-        from pyrocko.io import stationxml
-        fdsn = stationxml.load_xml(filename=self.config.fn_stations)
-        stations = fdsn.get_pyrocko_stations()
-        targets = stations_to_targets_channels(
-            stations, channels=self.channels)
 
         if self.convolve_instrument_respones:
-            for target in targets:
+            from pyrocko.io import stationxml
+            fdsn = stationxml.load_xml(filename=self.config.fn_stations)
+            for target in self.config.targets:
                 try:
                     target.response = fdsn.get_pyrocko_response(
                         target.codes, time=self.reftime)
@@ -881,7 +875,6 @@ class SynthesizerData(DataGenerator):
                         'No response! for target: %s' % list2string(
                             target.codes))
 
-        self.config.targets = targets
         # self.config.channels = [t.codes for t in self.config.targets]
         store_ids = [t.store_id for t in self.config.targets]
         store_id = set(store_ids)
@@ -940,7 +933,7 @@ class SynthesizerData(DataGenerator):
             pre_stack_cut=False, taper_tolerance_factor=0.,
             arrival_times=arrival_times, chop_bounds=['b', 'c'])
 
-        label = self.extract_labels(self.sources[0])
+        label = self.extract_labels(self.source)
 
         yield chunk, label
 

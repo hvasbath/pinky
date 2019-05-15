@@ -93,6 +93,7 @@ class PinkyConfig(Object):
     def __init__(self, *args, **kwargs):
         super(PinkyConfig, self).__init__(*args, **kwargs)
         stations = load_stations(self.fn_stations)
+        print(stations)
         self.targets = stations_to_targets(stations)
 
         if not self.reference_target:

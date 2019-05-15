@@ -1,12 +1,20 @@
+"""
+This test needs to be run from WITHIN the tet directory!!!
+"""
+
 import unittest
 import logging
 
 from pyrocko import util
-from pinky.data import SourceConfig
-from pinky.data import SynthesizerData
+from pinky.data import SourceConfig, SynthesizerData
+from pinky.config import PinkyConfig
+
 from beat.heart import ArrivalTaper, Filter
 
+
 store_superdirs = '/home/gesa/MTinv_tests/gfdbs/'
+fn_stations = 'data/meta/stations/ZS_pyrocko.pf'
+
 
 class TestSynthesizer(unittest.TestCase):
 
@@ -27,6 +35,15 @@ class TestSynthesizer(unittest.TestCase):
 
     def test_synthesizer_init(self):
         print(self.sc)
+
+    def test_synthesizer_setup(self):
+        self.pc = PinkyConfig(
+            data_generator=self.sc,
+            fn_stations=fn_stations,
+            n_classes=8,
+            reference_station='ZS.D085.'
+            )
+        self.sc.set_config(self.pc)
 
 
 if __name__ == "__main__":
