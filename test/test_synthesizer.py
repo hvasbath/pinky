@@ -50,8 +50,8 @@ class TestSynthesizer(unittest.TestCase):
             reference_station='ZS.D085.'
             )
         self.sc.set_config(self.pc)
-        trcs, label = next(self.sc.iter_examples_and_labels())
-        snuffle(trcs)
+        arr_trcs, label = next(self.sc.iter_examples_and_labels())
+        #snuffle(trcs)
 
 
 if __name__ == "__main__":

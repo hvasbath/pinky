@@ -943,7 +943,7 @@ class SynthesizerData(DataGenerator):
             self.engine, [self.source], self.config.targets,
             arrival_taper=self.taperer,
             wavename=self.wavename, filterer=self.filterer,
-            plot=False, nprocs=1, outmode='stacked_traces',
+            plot=False, nprocs=1, outmode='array',
             pre_stack_cut=False, taper_tolerance_factor=0.,
             arrival_times=arrival_times, chop_bounds=['b', 'c'])
 
