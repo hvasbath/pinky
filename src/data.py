@@ -878,7 +878,7 @@ class SynthesizerData(DataGenerator):
 
         arrival_times_tracing = num.array(
             [get_phase_arrival_time(
-                engine=self.engine, source=self.sources[0],
+                engine=self.engine, source=self.source,
                 target=target, wavename=wavename)
                 for target in self.config.targets])
 
@@ -891,7 +891,7 @@ class SynthesizerData(DataGenerator):
                         arrival_times_tracing.min()
 
         chunk = seis_synthetics(
-            self.engine, self.sources, self.config.targets,
+            self.engine, self.source, self.config.targets,
             arrival_taper=self.taperer,
             wavename=self.wavename, filterer=self.filterer,
             plot=False, nprocs=1, outmode='array',
