@@ -8,6 +8,8 @@ from pyrocko.pile import make_pile
 from pyrocko.model import load_stations
 from pyrocko.gf.seismosizer import Target
 
+from beat.heart import DynamicTarget
+
 from .data import Noise, Normalization, DataGeneratorBase, Imputation
 from .data import ImputationZero, ChannelStackGenerator
 
@@ -20,7 +22,7 @@ def stations_to_targets(stations):
     channels = 'ENZ'
     for s in stations:
         targets.extend(
-            [Target(codes=(s.network, s.station, s.location, c),
+            [DynamicTarget(codes=(s.network, s.station, s.location, c),
                 lat=s.lat, lon=s.lon, elevation=s.elevation,) for c in
                 channels])
 
@@ -93,7 +95,6 @@ class PinkyConfig(Object):
     def __init__(self, *args, **kwargs):
         super(PinkyConfig, self).__init__(*args, **kwargs)
         stations = load_stations(self.fn_stations)
-        print(stations)
         self.targets = stations_to_targets(stations)
 
         if not self.reference_target:

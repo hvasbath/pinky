@@ -12,7 +12,8 @@ from pyrocko import pile
 
 from beat.heart import seis_synthetics, get_phase_arrival_time, \
                        ArrivalTaper, Filter
-from beat.utility import list2string, weed_input_rvs, get_random_uniform
+from beat.utility import list2string, weed_input_rvs, get_random_uniform, \
+                         adjust_point_units
 from beat.config import default_bounds
 from beat.sources import MTQTSource
 
@@ -806,9 +807,12 @@ class SourceConfig(Object):
             svars, 'geometry', self.datatype)
 
         for variable in variables:
-            self.ranges[variable](Range(*default_bounds[variable]))
+            self.ranges[variable] = Range(*default_bounds[variable])
 
     def get_uniform_random(self):
+        if len(self.ranges) < 0:
+            raise ValueError('Source ranges not defined!')
+
         d = {}
         for variable, bound in self.ranges.items():
             d[variable] = get_random_uniform(
@@ -856,6 +860,8 @@ class SynthesizerData(DataGenerator):
             self.source_config = guts.load(filename=self.fn_source_config)
         else:
             logger.info('Using default config!')
+         
+        self.source_config.set_ranges()
 
         if self.store_id:
             for t in self.config.targets:
@@ -883,6 +889,9 @@ class SynthesizerData(DataGenerator):
 
         self.store = self.engine.get_store(store_id.pop())
 
+        if self.center_sources:
+            self.move_sources_to_station_center()
+
         #dt = self.config.deltat_want or self.store.config.deltat
         #self.n_samples = int(
         #    (self.config.sample_length + self.config.tpad) / dt)
@@ -895,8 +904,14 @@ class SynthesizerData(DataGenerator):
     def source(self):
         return self.source_config.source
 
+    def move_sources_to_station_center(self):
+        '''Transform the center of sources to the center of stations.'''
+        lat, lon = orthodrome.geographic_midpoint_locations(self.config.targets)
+        self.source.update(lat=lat, lon=lon)
+
     def update_source_randomly(self):
         d = self.source_config.get_uniform_random()
+        d = adjust_point_units(d)
         self.source_config.source.update(**d)
 
     def extract_labels(self, source):
@@ -910,11 +925,10 @@ class SynthesizerData(DataGenerator):
     def iter_examples_and_labels(self):
 
         self.update_source_randomly()
-
         arrival_times_tracing = num.array(
             [get_phase_arrival_time(
                 engine=self.engine, source=self.source,
-                target=target, wavename=wavename)
+                target=target, wavename=self.wavename)
                 for target in self.config.targets])
 
 
@@ -925,11 +939,11 @@ class SynthesizerData(DataGenerator):
         arrival_times = num.ones(self.ntargets, dtype='float64') * \
                         arrival_times_tracing.min()
 
-        chunk = seis_synthetics(
-            self.engine, self.source, self.config.targets,
+        chunk, _ = seis_synthetics(
+            self.engine, [self.source], self.config.targets,
             arrival_taper=self.taperer,
             wavename=self.wavename, filterer=self.filterer,
-            plot=False, nprocs=1, outmode='array',
+            plot=False, nprocs=1, outmode='stacked_traces',
             pre_stack_cut=False, taper_tolerance_factor=0.,
             arrival_times=arrival_times, chop_bounds=['b', 'c'])
 
