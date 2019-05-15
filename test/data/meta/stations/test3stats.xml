@@ -1,0 +1,1127 @@
+<FDSNStationXML xmlns="http://www.fdsn.org/xml/station/1" schemaVersion="1.0">
+  <Source>SeisComP3</Source>
+  <Sender>GFZ</Sender>
+  <Created>2019-04-10T14:54:17.353052Z</Created>
+  <Network code="ZS" startDate="2017-01-01T00:00:00Z" endDate="2019-12-31T00:00:00Z" restrictedStatus="closed">
+    <Description>AlpArray Seismic Network (SwathD) temporary component</Description>
+    <Station xmlns="http://www.fdsn.org/xml/station/1" code="D025" startDate="2017-09-29T00:00:00Z" endDate="2019-12-31T00:00:00Z" restrictedStatus="closed">
+      <Latitude>46.24649</Latitude>
+      <Longitude>11.41372</Longitude>
+      <Elevation>967.0</Elevation>
+      <Site>
+        <Name>GFZ Station Molina di Fiemme, Italy</Name>
+      </Site>
+      <CreationDate>2017-09-29T00:00:00Z</CreationDate>
+      <Channel code="HHZ" startDate="2017-09-29T00:00:00Z" endDate="2019-12-31T00:00:00Z" restrictedStatus="closed" locationCode="">
+        <Latitude>46.24649</Latitude>
+        <Longitude>11.41372</Longitude>
+        <Elevation>967.0</Elevation>
+        <Depth>0.5</Depth>
+        <Azimuth>0.0</Azimuth>
+        <Dip>-90.0</Dip>
+        <SampleRate>100.0</SampleRate>
+        <SampleRateRatio>
+          <NumberSamples>100</NumberSamples>
+          <NumberSeconds>1</NumberSeconds>
+        </SampleRateRatio>
+        <StorageFormat>Steim2</StorageFormat>
+        <ClockDrift>0.0</ClockDrift>
+        <Sensor resourceId="Sensor/20180226105852.888411.36">
+          <Description>GFZ:ZS2017:Trillium-Comp/B/g=750</Description>
+          <SerialNumber>xxxx</SerialNumber>
+        </Sensor>
+        <DataLogger resourceId="Datalogger/20181015112650.073171.41">
+          <Type>Omnirecs CUBE</Type>
+          <Description>GFZ:ZS2017:CUBE/g=1638400</Description>
+          <Manufacturer>Omnirecs</Manufacturer>
+          <Model>CUBE</Model>
+          <SerialNumber>0A2D</SerialNumber>
+        </DataLogger>
+        <Response>
+          <InstrumentSensitivity>
+            <Value>1228800000.0</Value>
+            <Frequency>0.1</Frequency>
+            <InputUnits>
+              <Name>M/S</Name>
+            </InputUnits>
+            <OutputUnits>
+              <Name>COUNTS</Name>
+            </OutputUnits>
+          </InstrumentSensitivity>
+          <Stage number="1">
+            <PolesZeros resourceId="ResponsePAZ/20180226105852.88863.37" name="GFZ:ZS2017:Trillium-Comp/B/g=750">
+              <InputUnits>
+                <Name>M/S</Name>
+              </InputUnits>
+              <OutputUnits>
+                <Name>V</Name>
+              </OutputUnits>
+              <PzTransferFunctionType>LAPLACE (RADIANS/SECOND)</PzTransferFunctionType>
+              <NormalizationFactor>1703691900.0</NormalizationFactor>
+              <NormalizationFrequency>1.0</NormalizationFrequency>
+              <Zero number="7">
+                <Real>0.0</Real>
+                <Imaginary>0.0</Imaginary>
+              </Zero>
+              <Zero number="8">
+                <Real>0.0</Real>
+                <Imaginary>0.0</Imaginary>
+              </Zero>
+              <Zero number="9">
+                <Real>-106.0</Real>
+                <Imaginary>0.0</Imaginary>
+              </Zero>
+              <Zero number="10">
+                <Real>-158.0</Real>
+                <Imaginary>0.0</Imaginary>
+              </Zero>
+              <Pole number="0">
+                <Real>-0.03859</Real>
+                <Imaginary>0.03649</Imaginary>
+              </Pole>
+              <Pole number="1">
+                <Real>-0.03859</Real>
+                <Imaginary>-0.03649</Imaginary>
+              </Pole>
+              <Pole number="2">
+                <Real>-190.0</Real>
+                <Imaginary>0.0</Imaginary>
+              </Pole>
+              <Pole number="3">
+                <Real>-158.0</Real>
+                <Imaginary>193.0</Imaginary>
+              </Pole>
+              <Pole number="4">
+                <Real>-158.0</Real>
+                <Imaginary>-193.0</Imaginary>
+              </Pole>
+              <Pole number="5">
+                <Real>-639.0</Real>
+                <Imaginary>1418.0</Imaginary>
+              </Pole>
+              <Pole number="6">
+                <Real>-639.0</Real>
+                <Imaginary>-1418.0</Imaginary>
+              </Pole>
+            </PolesZeros>
+            <StageGain>
+              <Value>750.0</Value>
+              <Frequency>0.1</Frequency>
+            </StageGain>
+          </Stage>
+          <Stage number="2">
+            <Coefficients>
+              <InputUnits>
+                <Name>V</Name>
+              </InputUnits>
+              <OutputUnits>
+                <Name>COUNTS</Name>
+              </OutputUnits>
+              <CfTransferFunctionType>DIGITAL</CfTransferFunctionType>
+            </Coefficients>
+            <Decimation>
+              <InputSampleRate>100.0</InputSampleRate>
+              <Factor>1</Factor>
+              <Offset>0</Offset>
+              <Delay>0.0</Delay>
+              <Correction>0.0</Correction>
+            </Decimation>
+            <StageGain>
+              <Value>1638400.0</Value>
+              <Frequency>0.0</Frequency>
+            </StageGain>
+          </Stage>
+          <Stage number="3">
+            <FIR resourceId="ResponseFIR/20171204141244.775303.40" name="GFZ:ZS2017:CUBE_FIR_2">
+              <InputUnits>
+                <Name>COUNTS</Name>
+              </InputUnits>
+              <OutputUnits>
+                <Name>COUNTS</Name>
+              </OutputUnits>
+              <Symmetry>ODD</Symmetry>
+              <NumeratorCoefficient>3.398931932e-14</NumeratorCoefficient>
+              <NumeratorCoefficient>1.001367638e-08</NumeratorCoefficient>
+              <NumeratorCoefficient>-3.046351245e-08</NumeratorCoefficient>
+              <NumeratorCoefficient>-1.872202041e-06</NumeratorCoefficient>
+              <NumeratorCoefficient>-1.299111852e-06</NumeratorCoefficient>
+              <NumeratorCoefficient>9.996142769e-05</NumeratorCoefficient>
+              <NumeratorCoefficient>-4.176234235e-06</NumeratorCoefficient>
+              <NumeratorCoefficient>-0.000123442147</NumeratorCoefficient>
+              <NumeratorCoefficient>0.0003286345913</NumeratorCoefficient>
+              <NumeratorCoefficient>-0.0005102351425</NumeratorCoefficient>
+              <NumeratorCoefficient>0.0005017251901</NumeratorCoefficient>
+              <NumeratorCoefficient>-0.0001168713827</NumeratorCoefficient>
+              <NumeratorCoefficient>-0.000749475221</NumeratorCoefficient>
+              <NumeratorCoefficient>0.002005231621</NumeratorCoefficient>
+              <NumeratorCoefficient>-0.003279612808</NumeratorCoefficient>
+              <NumeratorCoefficient>0.003936682996</NumeratorCoefficient>
+              <NumeratorCoefficient>-0.003222618392</NumeratorCoefficient>
+              <NumeratorCoefficient>0.0005424825886</NumeratorCoefficient>
+              <NumeratorCoefficient>0.004197616421</NumeratorCoefficient>
+              <NumeratorCoefficient>-0.01029651101</NumeratorCoefficient>
+              <NumeratorCoefficient>0.01614194498</NumeratorCoefficient>
+              <NumeratorCoefficient>-0.01937470878</NumeratorCoefficient>
+              <NumeratorCoefficient>0.01735768111</NumeratorCoefficient>
+              <NumeratorCoefficient>-0.007869809688</NumeratorCoefficient>
+              <NumeratorCoefficient>-0.01015055434</NumeratorCoefficient>
+              <NumeratorCoefficient>0.03603856071</NumeratorCoefficient>
+              <NumeratorCoefficient>-0.06721102141</NumeratorCoefficient>
+              <NumeratorCoefficient>0.0992542299</NumeratorCoefficient>
+              <NumeratorCoefficient>-0.1272888801</NumeratorCoefficient>
+              <NumeratorCoefficient>0.1464162618</NumeratorCoefficient>
+              <NumeratorCoefficient>0.84676019</NumeratorCoefficient>
+            </FIR>
+            <Decimation>
+              <InputSampleRate>100.0</InputSampleRate>
+              <Factor>1</Factor>
+              <Offset>0</Offset>
+              <Delay>0.3</Delay>
+              <Correction>0.3</Correction>
+            </Decimation>
+            <StageGain>
+              <Value>1.0</Value>
+              <Frequency>0.0</Frequency>
+            </StageGain>
+          </Stage>
+        </Response>
+      </Channel>
+      <Channel code="HHN" startDate="2017-09-29T00:00:00Z" endDate="2019-12-31T00:00:00Z" restrictedStatus="closed" locationCode="">
+        <Latitude>46.24649</Latitude>
+        <Longitude>11.41372</Longitude>
+        <Elevation>967.0</Elevation>
+        <Depth>0.5</Depth>
+        <Azimuth>0.0</Azimuth>
+        <Dip>0.0</Dip>
+        <SampleRate>100.0</SampleRate>
+        <SampleRateRatio>
+          <NumberSamples>100</NumberSamples>
+          <NumberSeconds>1</NumberSeconds>
+        </SampleRateRatio>
+        <StorageFormat>Steim2</StorageFormat>
+        <ClockDrift>0.0</ClockDrift>
+        <Sensor resourceId="Sensor/20180226105852.888411.36">
+          <Description>GFZ:ZS2017:Trillium-Comp/B/g=750</Description>
+          <SerialNumber>xxxx</SerialNumber>
+        </Sensor>
+        <DataLogger resourceId="Datalogger/20181015112650.073171.41">
+          <Type>Omnirecs CUBE</Type>
+          <Description>GFZ:ZS2017:CUBE/g=1638400</Description>
+          <Manufacturer>Omnirecs</Manufacturer>
+          <Model>CUBE</Model>
+          <SerialNumber>0A2D</SerialNumber>
+        </DataLogger>
+        <Response>
+          <InstrumentSensitivity>
+            <Value>1228800000.0</Value>
+            <Frequency>0.1</Frequency>
+            <InputUnits>
+              <Name>M/S</Name>
+            </InputUnits>
+            <OutputUnits>
+              <Name>COUNTS</Name>
+            </OutputUnits>
+          </InstrumentSensitivity>
+          <Stage number="1">
+            <PolesZeros resourceId="ResponsePAZ/20180226105852.88863.37" name="GFZ:ZS2017:Trillium-Comp/B/g=750">
+              <InputUnits>
+                <Name>M/S</Name>
+              </InputUnits>
+              <OutputUnits>
+                <Name>V</Name>
+              </OutputUnits>
+              <PzTransferFunctionType>LAPLACE (RADIANS/SECOND)</PzTransferFunctionType>
+              <NormalizationFactor>1703691900.0</NormalizationFactor>
+              <NormalizationFrequency>1.0</NormalizationFrequency>
+              <Zero number="7">
+                <Real>0.0</Real>
+                <Imaginary>0.0</Imaginary>
+              </Zero>
+              <Zero number="8">
+                <Real>0.0</Real>
+                <Imaginary>0.0</Imaginary>
+              </Zero>
+              <Zero number="9">
+                <Real>-106.0</Real>
+                <Imaginary>0.0</Imaginary>
+              </Zero>
+              <Zero number="10">
+                <Real>-158.0</Real>
+                <Imaginary>0.0</Imaginary>
+              </Zero>
+              <Pole number="0">
+                <Real>-0.03859</Real>
+                <Imaginary>0.03649</Imaginary>
+              </Pole>
+              <Pole number="1">
+                <Real>-0.03859</Real>
+                <Imaginary>-0.03649</Imaginary>
+              </Pole>
+              <Pole number="2">
+                <Real>-190.0</Real>
+                <Imaginary>0.0</Imaginary>
+              </Pole>
+              <Pole number="3">
+                <Real>-158.0</Real>
+                <Imaginary>193.0</Imaginary>
+              </Pole>
+              <Pole number="4">
+                <Real>-158.0</Real>
+                <Imaginary>-193.0</Imaginary>
+              </Pole>
+              <Pole number="5">
+                <Real>-639.0</Real>
+                <Imaginary>1418.0</Imaginary>
+              </Pole>
+              <Pole number="6">
+                <Real>-639.0</Real>
+                <Imaginary>-1418.0</Imaginary>
+              </Pole>
+            </PolesZeros>
+            <StageGain>
+              <Value>750.0</Value>
+              <Frequency>0.1</Frequency>
+            </StageGain>
+          </Stage>
+          <Stage number="2">
+            <Coefficients>
+              <InputUnits>
+                <Name>V</Name>
+              </InputUnits>
+              <OutputUnits>
+                <Name>COUNTS</Name>
+              </OutputUnits>
+              <CfTransferFunctionType>DIGITAL</CfTransferFunctionType>
+            </Coefficients>
+            <Decimation>
+              <InputSampleRate>100.0</InputSampleRate>
+              <Factor>1</Factor>
+              <Offset>0</Offset>
+              <Delay>0.0</Delay>
+              <Correction>0.0</Correction>
+            </Decimation>
+            <StageGain>
+              <Value>1638400.0</Value>
+              <Frequency>0.0</Frequency>
+            </StageGain>
+          </Stage>
+          <Stage number="3">
+            <FIR resourceId="ResponseFIR/20171204141244.775303.40" name="GFZ:ZS2017:CUBE_FIR_2">
+              <InputUnits>
+                <Name>COUNTS</Name>
+              </InputUnits>
+              <OutputUnits>
+                <Name>COUNTS</Name>
+              </OutputUnits>
+              <Symmetry>ODD</Symmetry>
+              <NumeratorCoefficient>3.398931932e-14</NumeratorCoefficient>
+              <NumeratorCoefficient>1.001367638e-08</NumeratorCoefficient>
+              <NumeratorCoefficient>-3.046351245e-08</NumeratorCoefficient>
+              <NumeratorCoefficient>-1.872202041e-06</NumeratorCoefficient>
+              <NumeratorCoefficient>-1.299111852e-06</NumeratorCoefficient>
+              <NumeratorCoefficient>9.996142769e-05</NumeratorCoefficient>
+              <NumeratorCoefficient>-4.176234235e-06</NumeratorCoefficient>
+              <NumeratorCoefficient>-0.000123442147</NumeratorCoefficient>
+              <NumeratorCoefficient>0.0003286345913</NumeratorCoefficient>
+              <NumeratorCoefficient>-0.0005102351425</NumeratorCoefficient>
+              <NumeratorCoefficient>0.0005017251901</NumeratorCoefficient>
+              <NumeratorCoefficient>-0.0001168713827</NumeratorCoefficient>
+              <NumeratorCoefficient>-0.000749475221</NumeratorCoefficient>
+              <NumeratorCoefficient>0.002005231621</NumeratorCoefficient>
+              <NumeratorCoefficient>-0.003279612808</NumeratorCoefficient>
+              <NumeratorCoefficient>0.003936682996</NumeratorCoefficient>
+              <NumeratorCoefficient>-0.003222618392</NumeratorCoefficient>
+              <NumeratorCoefficient>0.0005424825886</NumeratorCoefficient>
+              <NumeratorCoefficient>0.004197616421</NumeratorCoefficient>
+              <NumeratorCoefficient>-0.01029651101</NumeratorCoefficient>
+              <NumeratorCoefficient>0.01614194498</NumeratorCoefficient>
+              <NumeratorCoefficient>-0.01937470878</NumeratorCoefficient>
+              <NumeratorCoefficient>0.01735768111</NumeratorCoefficient>
+              <NumeratorCoefficient>-0.007869809688</NumeratorCoefficient>
+              <NumeratorCoefficient>-0.01015055434</NumeratorCoefficient>
+              <NumeratorCoefficient>0.03603856071</NumeratorCoefficient>
+              <NumeratorCoefficient>-0.06721102141</NumeratorCoefficient>
+              <NumeratorCoefficient>0.0992542299</NumeratorCoefficient>
+              <NumeratorCoefficient>-0.1272888801</NumeratorCoefficient>
+              <NumeratorCoefficient>0.1464162618</NumeratorCoefficient>
+              <NumeratorCoefficient>0.84676019</NumeratorCoefficient>
+            </FIR>
+            <Decimation>
+              <InputSampleRate>100.0</InputSampleRate>
+              <Factor>1</Factor>
+              <Offset>0</Offset>
+              <Delay>0.3</Delay>
+              <Correction>0.3</Correction>
+            </Decimation>
+            <StageGain>
+              <Value>1.0</Value>
+              <Frequency>0.0</Frequency>
+            </StageGain>
+          </Stage>
+        </Response>
+      </Channel>
+      <Channel code="HHE" startDate="2017-09-29T00:00:00Z" endDate="2019-12-31T00:00:00Z" restrictedStatus="closed" locationCode="">
+        <Latitude>46.24649</Latitude>
+        <Longitude>11.41372</Longitude>
+        <Elevation>967.0</Elevation>
+        <Depth>0.5</Depth>
+        <Azimuth>90.0</Azimuth>
+        <Dip>0.0</Dip>
+        <SampleRate>100.0</SampleRate>
+        <SampleRateRatio>
+          <NumberSamples>100</NumberSamples>
+          <NumberSeconds>1</NumberSeconds>
+        </SampleRateRatio>
+        <StorageFormat>Steim2</StorageFormat>
+        <ClockDrift>0.0</ClockDrift>
+        <Sensor resourceId="Sensor/20180226105852.888411.36">
+          <Description>GFZ:ZS2017:Trillium-Comp/B/g=750</Description>
+          <SerialNumber>xxxx</SerialNumber>
+        </Sensor>
+        <DataLogger resourceId="Datalogger/20181015112650.073171.41">
+          <Type>Omnirecs CUBE</Type>
+          <Description>GFZ:ZS2017:CUBE/g=1638400</Description>
+          <Manufacturer>Omnirecs</Manufacturer>
+          <Model>CUBE</Model>
+          <SerialNumber>0A2D</SerialNumber>
+        </DataLogger>
+        <Response>
+          <InstrumentSensitivity>
+            <Value>1228800000.0</Value>
+            <Frequency>0.1</Frequency>
+            <InputUnits>
+              <Name>M/S</Name>
+            </InputUnits>
+            <OutputUnits>
+              <Name>COUNTS</Name>
+            </OutputUnits>
+          </InstrumentSensitivity>
+          <Stage number="1">
+            <PolesZeros resourceId="ResponsePAZ/20180226105852.88863.37" name="GFZ:ZS2017:Trillium-Comp/B/g=750">
+              <InputUnits>
+                <Name>M/S</Name>
+              </InputUnits>
+              <OutputUnits>
+                <Name>V</Name>
+              </OutputUnits>
+              <PzTransferFunctionType>LAPLACE (RADIANS/SECOND)</PzTransferFunctionType>
+              <NormalizationFactor>1703691900.0</NormalizationFactor>
+              <NormalizationFrequency>1.0</NormalizationFrequency>
+              <Zero number="7">
+                <Real>0.0</Real>
+                <Imaginary>0.0</Imaginary>
+              </Zero>
+              <Zero number="8">
+                <Real>0.0</Real>
+                <Imaginary>0.0</Imaginary>
+              </Zero>
+              <Zero number="9">
+                <Real>-106.0</Real>
+                <Imaginary>0.0</Imaginary>
+              </Zero>
+              <Zero number="10">
+                <Real>-158.0</Real>
+                <Imaginary>0.0</Imaginary>
+              </Zero>
+              <Pole number="0">
+                <Real>-0.03859</Real>
+                <Imaginary>0.03649</Imaginary>
+              </Pole>
+              <Pole number="1">
+                <Real>-0.03859</Real>
+                <Imaginary>-0.03649</Imaginary>
+              </Pole>
+              <Pole number="2">
+                <Real>-190.0</Real>
+                <Imaginary>0.0</Imaginary>
+              </Pole>
+              <Pole number="3">
+                <Real>-158.0</Real>
+                <Imaginary>193.0</Imaginary>
+              </Pole>
+              <Pole number="4">
+                <Real>-158.0</Real>
+                <Imaginary>-193.0</Imaginary>
+              </Pole>
+              <Pole number="5">
+                <Real>-639.0</Real>
+                <Imaginary>1418.0</Imaginary>
+              </Pole>
+              <Pole number="6">
+                <Real>-639.0</Real>
+                <Imaginary>-1418.0</Imaginary>
+              </Pole>
+            </PolesZeros>
+            <StageGain>
+              <Value>750.0</Value>
+              <Frequency>0.1</Frequency>
+            </StageGain>
+          </Stage>
+          <Stage number="2">
+            <Coefficients>
+              <InputUnits>
+                <Name>V</Name>
+              </InputUnits>
+              <OutputUnits>
+                <Name>COUNTS</Name>
+              </OutputUnits>
+              <CfTransferFunctionType>DIGITAL</CfTransferFunctionType>
+            </Coefficients>
+            <Decimation>
+              <InputSampleRate>100.0</InputSampleRate>
+              <Factor>1</Factor>
+              <Offset>0</Offset>
+              <Delay>0.0</Delay>
+              <Correction>0.0</Correction>
+            </Decimation>
+            <StageGain>
+              <Value>1638400.0</Value>
+              <Frequency>0.0</Frequency>
+            </StageGain>
+          </Stage>
+          <Stage number="3">
+            <FIR resourceId="ResponseFIR/20171204141244.775303.40" name="GFZ:ZS2017:CUBE_FIR_2">
+              <InputUnits>
+                <Name>COUNTS</Name>
+              </InputUnits>
+              <OutputUnits>
+                <Name>COUNTS</Name>
+              </OutputUnits>
+              <Symmetry>ODD</Symmetry>
+              <NumeratorCoefficient>3.398931932e-14</NumeratorCoefficient>
+              <NumeratorCoefficient>1.001367638e-08</NumeratorCoefficient>
+              <NumeratorCoefficient>-3.046351245e-08</NumeratorCoefficient>
+              <NumeratorCoefficient>-1.872202041e-06</NumeratorCoefficient>
+              <NumeratorCoefficient>-1.299111852e-06</NumeratorCoefficient>
+              <NumeratorCoefficient>9.996142769e-05</NumeratorCoefficient>
+              <NumeratorCoefficient>-4.176234235e-06</NumeratorCoefficient>
+              <NumeratorCoefficient>-0.000123442147</NumeratorCoefficient>
+              <NumeratorCoefficient>0.0003286345913</NumeratorCoefficient>
+              <NumeratorCoefficient>-0.0005102351425</NumeratorCoefficient>
+              <NumeratorCoefficient>0.0005017251901</NumeratorCoefficient>
+              <NumeratorCoefficient>-0.0001168713827</NumeratorCoefficient>
+              <NumeratorCoefficient>-0.000749475221</NumeratorCoefficient>
+              <NumeratorCoefficient>0.002005231621</NumeratorCoefficient>
+              <NumeratorCoefficient>-0.003279612808</NumeratorCoefficient>
+              <NumeratorCoefficient>0.003936682996</NumeratorCoefficient>
+              <NumeratorCoefficient>-0.003222618392</NumeratorCoefficient>
+              <NumeratorCoefficient>0.0005424825886</NumeratorCoefficient>
+              <NumeratorCoefficient>0.004197616421</NumeratorCoefficient>
+              <NumeratorCoefficient>-0.01029651101</NumeratorCoefficient>
+              <NumeratorCoefficient>0.01614194498</NumeratorCoefficient>
+              <NumeratorCoefficient>-0.01937470878</NumeratorCoefficient>
+              <NumeratorCoefficient>0.01735768111</NumeratorCoefficient>
+              <NumeratorCoefficient>-0.007869809688</NumeratorCoefficient>
+              <NumeratorCoefficient>-0.01015055434</NumeratorCoefficient>
+              <NumeratorCoefficient>0.03603856071</NumeratorCoefficient>
+              <NumeratorCoefficient>-0.06721102141</NumeratorCoefficient>
+              <NumeratorCoefficient>0.0992542299</NumeratorCoefficient>
+              <NumeratorCoefficient>-0.1272888801</NumeratorCoefficient>
+              <NumeratorCoefficient>0.1464162618</NumeratorCoefficient>
+              <NumeratorCoefficient>0.84676019</NumeratorCoefficient>
+            </FIR>
+            <Decimation>
+              <InputSampleRate>100.0</InputSampleRate>
+              <Factor>1</Factor>
+              <Offset>0</Offset>
+              <Delay>0.3</Delay>
+              <Correction>0.3</Correction>
+            </Decimation>
+            <StageGain>
+              <Value>1.0</Value>
+              <Frequency>0.0</Frequency>
+            </StageGain>
+          </Stage>
+        </Response>
+      </Channel>
+    </Station>
+    <Station xmlns="http://www.fdsn.org/xml/station/1" code="D087" startDate="2017-09-05T00:00:00Z" endDate="2019-12-31T00:00:00Z" restrictedStatus="closed">
+      <Latitude>46.65428</Latitude>
+      <Longitude>11.54339</Longitude>
+      <Elevation>1293.0</Elevation>
+      <Site>
+        <Name>GFZ Station Bergwerk Villanders, Italy</Name>
+      </Site>
+      <CreationDate>2017-09-05T00:00:00Z</CreationDate>
+      <Channel code="HHZ" startDate="2017-09-05T00:00:00Z" endDate="2019-12-31T00:00:00Z" restrictedStatus="closed" locationCode="">
+        <Latitude>46.65428</Latitude>
+        <Longitude>11.54339</Longitude>
+        <Elevation>1293.0</Elevation>
+        <Depth>0.0</Depth>
+        <Azimuth>0.0</Azimuth>
+        <Dip>-90.0</Dip>
+        <SampleRate>100.0</SampleRate>
+        <SampleRateRatio>
+          <NumberSamples>100</NumberSamples>
+          <NumberSeconds>1</NumberSeconds>
+        </SampleRateRatio>
+        <StorageFormat>Steim2</StorageFormat>
+        <ClockDrift>0.0</ClockDrift>
+        <Sensor resourceId="Sensor/20171204141244.731837.6">
+          <Type>BB</Type>
+          <Description>GFZ:ZS2017:CMG-3ESP/60/g=2000</Description>
+          <Manufacturer>Guralp</Manufacturer>
+          <Model>CMG-3ESP/60</Model>
+          <SerialNumber>0078</SerialNumber>
+        </Sensor>
+        <DataLogger resourceId="Datalogger/20171204141244.748989.8">
+          <Type>EarthData</Type>
+          <Description>GFZ:ZS2017:EDR210/g=1000000</Description>
+          <Manufacturer>EarthData</Manufacturer>
+          <SerialNumber>3119</SerialNumber>
+        </DataLogger>
+        <Response>
+          <InstrumentSensitivity>
+            <Value>2000000000.0</Value>
+            <Frequency>0.1</Frequency>
+            <InputUnits>
+              <Name>M/S</Name>
+            </InputUnits>
+            <OutputUnits>
+              <Name>COUNTS</Name>
+            </OutputUnits>
+          </InstrumentSensitivity>
+          <Stage number="1">
+            <PolesZeros resourceId="ResponsePAZ/20171204141244.732091.7" name="GFZ:ZS2017:CMG-3ESP/60/g=2000">
+              <InputUnits>
+                <Name>M/S</Name>
+              </InputUnits>
+              <OutputUnits>
+                <Name>V</Name>
+              </OutputUnits>
+              <PzTransferFunctionType>LAPLACE (RADIANS/SECOND)</PzTransferFunctionType>
+              <NormalizationFactor>1.0</NormalizationFactor>
+              <NormalizationFrequency>1.0</NormalizationFrequency>
+              <Zero number="2">
+                <Real>0.0</Real>
+                <Imaginary>0.0</Imaginary>
+              </Zero>
+              <Zero number="3">
+                <Real>0.0</Real>
+                <Imaginary>0.0</Imaginary>
+              </Zero>
+              <Pole number="0">
+                <Real>-0.074008</Real>
+                <Imaginary>0.074032</Imaginary>
+              </Pole>
+              <Pole number="1">
+                <Real>-0.074008</Real>
+                <Imaginary>-0.074032</Imaginary>
+              </Pole>
+            </PolesZeros>
+            <StageGain>
+              <Value>2000.0</Value>
+              <Frequency>0.1</Frequency>
+            </StageGain>
+          </Stage>
+          <Stage number="2">
+            <Coefficients>
+              <InputUnits>
+                <Name>V</Name>
+              </InputUnits>
+              <OutputUnits>
+                <Name>COUNTS</Name>
+              </OutputUnits>
+              <CfTransferFunctionType>DIGITAL</CfTransferFunctionType>
+            </Coefficients>
+            <Decimation>
+              <InputSampleRate>100.0</InputSampleRate>
+              <Factor>1</Factor>
+              <Offset>0</Offset>
+              <Delay>0.0</Delay>
+              <Correction>0.0</Correction>
+            </Decimation>
+            <StageGain>
+              <Value>1000000.0</Value>
+              <Frequency>0.0</Frequency>
+            </StageGain>
+          </Stage>
+        </Response>
+      </Channel>
+      <Channel code="HHN" startDate="2017-09-05T00:00:00Z" endDate="2019-12-31T00:00:00Z" restrictedStatus="closed" locationCode="">
+        <Latitude>46.65428</Latitude>
+        <Longitude>11.54339</Longitude>
+        <Elevation>1293.0</Elevation>
+        <Depth>0.0</Depth>
+        <Azimuth>0.0</Azimuth>
+        <Dip>0.0</Dip>
+        <SampleRate>100.0</SampleRate>
+        <SampleRateRatio>
+          <NumberSamples>100</NumberSamples>
+          <NumberSeconds>1</NumberSeconds>
+        </SampleRateRatio>
+        <StorageFormat>Steim2</StorageFormat>
+        <ClockDrift>0.0</ClockDrift>
+        <Sensor resourceId="Sensor/20171204141244.731837.6">
+          <Type>BB</Type>
+          <Description>GFZ:ZS2017:CMG-3ESP/60/g=2000</Description>
+          <Manufacturer>Guralp</Manufacturer>
+          <Model>CMG-3ESP/60</Model>
+          <SerialNumber>0078</SerialNumber>
+        </Sensor>
+        <DataLogger resourceId="Datalogger/20171204141244.748989.8">
+          <Type>EarthData</Type>
+          <Description>GFZ:ZS2017:EDR210/g=1000000</Description>
+          <Manufacturer>EarthData</Manufacturer>
+          <SerialNumber>3119</SerialNumber>
+        </DataLogger>
+        <Response>
+          <InstrumentSensitivity>
+            <Value>2000000000.0</Value>
+            <Frequency>0.1</Frequency>
+            <InputUnits>
+              <Name>M/S</Name>
+            </InputUnits>
+            <OutputUnits>
+              <Name>COUNTS</Name>
+            </OutputUnits>
+          </InstrumentSensitivity>
+          <Stage number="1">
+            <PolesZeros resourceId="ResponsePAZ/20171204141244.732091.7" name="GFZ:ZS2017:CMG-3ESP/60/g=2000">
+              <InputUnits>
+                <Name>M/S</Name>
+              </InputUnits>
+              <OutputUnits>
+                <Name>V</Name>
+              </OutputUnits>
+              <PzTransferFunctionType>LAPLACE (RADIANS/SECOND)</PzTransferFunctionType>
+              <NormalizationFactor>1.0</NormalizationFactor>
+              <NormalizationFrequency>1.0</NormalizationFrequency>
+              <Zero number="2">
+                <Real>0.0</Real>
+                <Imaginary>0.0</Imaginary>
+              </Zero>
+              <Zero number="3">
+                <Real>0.0</Real>
+                <Imaginary>0.0</Imaginary>
+              </Zero>
+              <Pole number="0">
+                <Real>-0.074008</Real>
+                <Imaginary>0.074032</Imaginary>
+              </Pole>
+              <Pole number="1">
+                <Real>-0.074008</Real>
+                <Imaginary>-0.074032</Imaginary>
+              </Pole>
+            </PolesZeros>
+            <StageGain>
+              <Value>2000.0</Value>
+              <Frequency>0.1</Frequency>
+            </StageGain>
+          </Stage>
+          <Stage number="2">
+            <Coefficients>
+              <InputUnits>
+                <Name>V</Name>
+              </InputUnits>
+              <OutputUnits>
+                <Name>COUNTS</Name>
+              </OutputUnits>
+              <CfTransferFunctionType>DIGITAL</CfTransferFunctionType>
+            </Coefficients>
+            <Decimation>
+              <InputSampleRate>100.0</InputSampleRate>
+              <Factor>1</Factor>
+              <Offset>0</Offset>
+              <Delay>0.0</Delay>
+              <Correction>0.0</Correction>
+            </Decimation>
+            <StageGain>
+              <Value>1000000.0</Value>
+              <Frequency>0.0</Frequency>
+            </StageGain>
+          </Stage>
+        </Response>
+      </Channel>
+      <Channel code="HHE" startDate="2017-09-05T00:00:00Z" endDate="2019-12-31T00:00:00Z" restrictedStatus="closed" locationCode="">
+        <Latitude>46.65428</Latitude>
+        <Longitude>11.54339</Longitude>
+        <Elevation>1293.0</Elevation>
+        <Depth>0.0</Depth>
+        <Azimuth>90.0</Azimuth>
+        <Dip>0.0</Dip>
+        <SampleRate>100.0</SampleRate>
+        <SampleRateRatio>
+          <NumberSamples>100</NumberSamples>
+          <NumberSeconds>1</NumberSeconds>
+        </SampleRateRatio>
+        <StorageFormat>Steim2</StorageFormat>
+        <ClockDrift>0.0</ClockDrift>
+        <Sensor resourceId="Sensor/20171204141244.731837.6">
+          <Type>BB</Type>
+          <Description>GFZ:ZS2017:CMG-3ESP/60/g=2000</Description>
+          <Manufacturer>Guralp</Manufacturer>
+          <Model>CMG-3ESP/60</Model>
+          <SerialNumber>0078</SerialNumber>
+        </Sensor>
+        <DataLogger resourceId="Datalogger/20171204141244.748989.8">
+          <Type>EarthData</Type>
+          <Description>GFZ:ZS2017:EDR210/g=1000000</Description>
+          <Manufacturer>EarthData</Manufacturer>
+          <SerialNumber>3119</SerialNumber>
+        </DataLogger>
+        <Response>
+          <InstrumentSensitivity>
+            <Value>2000000000.0</Value>
+            <Frequency>0.1</Frequency>
+            <InputUnits>
+              <Name>M/S</Name>
+            </InputUnits>
+            <OutputUnits>
+              <Name>COUNTS</Name>
+            </OutputUnits>
+          </InstrumentSensitivity>
+          <Stage number="1">
+            <PolesZeros resourceId="ResponsePAZ/20171204141244.732091.7" name="GFZ:ZS2017:CMG-3ESP/60/g=2000">
+              <InputUnits>
+                <Name>M/S</Name>
+              </InputUnits>
+              <OutputUnits>
+                <Name>V</Name>
+              </OutputUnits>
+              <PzTransferFunctionType>LAPLACE (RADIANS/SECOND)</PzTransferFunctionType>
+              <NormalizationFactor>1.0</NormalizationFactor>
+              <NormalizationFrequency>1.0</NormalizationFrequency>
+              <Zero number="2">
+                <Real>0.0</Real>
+                <Imaginary>0.0</Imaginary>
+              </Zero>
+              <Zero number="3">
+                <Real>0.0</Real>
+                <Imaginary>0.0</Imaginary>
+              </Zero>
+              <Pole number="0">
+                <Real>-0.074008</Real>
+                <Imaginary>0.074032</Imaginary>
+              </Pole>
+              <Pole number="1">
+                <Real>-0.074008</Real>
+                <Imaginary>-0.074032</Imaginary>
+              </Pole>
+            </PolesZeros>
+            <StageGain>
+              <Value>2000.0</Value>
+              <Frequency>0.1</Frequency>
+            </StageGain>
+          </Stage>
+          <Stage number="2">
+            <Coefficients>
+              <InputUnits>
+                <Name>V</Name>
+              </InputUnits>
+              <OutputUnits>
+                <Name>COUNTS</Name>
+              </OutputUnits>
+              <CfTransferFunctionType>DIGITAL</CfTransferFunctionType>
+            </Coefficients>
+            <Decimation>
+              <InputSampleRate>100.0</InputSampleRate>
+              <Factor>1</Factor>
+              <Offset>0</Offset>
+              <Delay>0.0</Delay>
+              <Correction>0.0</Correction>
+            </Decimation>
+            <StageGain>
+              <Value>1000000.0</Value>
+              <Frequency>0.0</Frequency>
+            </StageGain>
+          </Stage>
+        </Response>
+      </Channel>
+    </Station>
+    <Station xmlns="http://www.fdsn.org/xml/station/1" code="D085" startDate="2017-09-12T00:00:00Z" endDate="2019-12-31T00:00:00Z" restrictedStatus="closed">
+      <Latitude>46.57634</Latitude>
+      <Longitude>11.16347</Longitude>
+      <Elevation>666.0</Elevation>
+      <Site>
+        <Name>GFZ Station Narano, Italy</Name>
+      </Site>
+      <CreationDate>2017-09-12T00:00:00Z</CreationDate>
+      <Channel code="HHZ" startDate="2017-09-12T00:00:00Z" endDate="2019-12-31T00:00:00Z" restrictedStatus="closed" locationCode="">
+        <Latitude>46.57634</Latitude>
+        <Longitude>11.16347</Longitude>
+        <Elevation>666.0</Elevation>
+        <Depth>0.0</Depth>
+        <Azimuth>0.0</Azimuth>
+        <Dip>-90.0</Dip>
+        <SampleRate>100.0</SampleRate>
+        <SampleRateRatio>
+          <NumberSamples>100</NumberSamples>
+          <NumberSeconds>1</NumberSeconds>
+        </SampleRateRatio>
+        <StorageFormat>Steim2</StorageFormat>
+        <ClockDrift>0.0</ClockDrift>
+        <Sensor resourceId="Sensor/20171204141244.731837.6">
+          <Type>BB</Type>
+          <Description>GFZ:ZS2017:CMG-3ESP/60/g=2000</Description>
+          <Manufacturer>Guralp</Manufacturer>
+          <Model>CMG-3ESP/60</Model>
+          <SerialNumber>0077</SerialNumber>
+        </Sensor>
+        <DataLogger resourceId="Datalogger/20171204141244.748989.8">
+          <Type>EarthData</Type>
+          <Description>GFZ:ZS2017:EDR210/g=1000000</Description>
+          <Manufacturer>EarthData</Manufacturer>
+          <SerialNumber>3118</SerialNumber>
+        </DataLogger>
+        <Response>
+          <InstrumentSensitivity>
+            <Value>2000000000.0</Value>
+            <Frequency>0.1</Frequency>
+            <InputUnits>
+              <Name>M/S</Name>
+            </InputUnits>
+            <OutputUnits>
+              <Name>COUNTS</Name>
+            </OutputUnits>
+          </InstrumentSensitivity>
+          <Stage number="1">
+            <PolesZeros resourceId="ResponsePAZ/20171204141244.732091.7" name="GFZ:ZS2017:CMG-3ESP/60/g=2000">
+              <InputUnits>
+                <Name>M/S</Name>
+              </InputUnits>
+              <OutputUnits>
+                <Name>V</Name>
+              </OutputUnits>
+              <PzTransferFunctionType>LAPLACE (RADIANS/SECOND)</PzTransferFunctionType>
+              <NormalizationFactor>1.0</NormalizationFactor>
+              <NormalizationFrequency>1.0</NormalizationFrequency>
+              <Zero number="2">
+                <Real>0.0</Real>
+                <Imaginary>0.0</Imaginary>
+              </Zero>
+              <Zero number="3">
+                <Real>0.0</Real>
+                <Imaginary>0.0</Imaginary>
+              </Zero>
+              <Pole number="0">
+                <Real>-0.074008</Real>
+                <Imaginary>0.074032</Imaginary>
+              </Pole>
+              <Pole number="1">
+                <Real>-0.074008</Real>
+                <Imaginary>-0.074032</Imaginary>
+              </Pole>
+            </PolesZeros>
+            <StageGain>
+              <Value>2000.0</Value>
+              <Frequency>0.1</Frequency>
+            </StageGain>
+          </Stage>
+          <Stage number="2">
+            <Coefficients>
+              <InputUnits>
+                <Name>V</Name>
+              </InputUnits>
+              <OutputUnits>
+                <Name>COUNTS</Name>
+              </OutputUnits>
+              <CfTransferFunctionType>DIGITAL</CfTransferFunctionType>
+            </Coefficients>
+            <Decimation>
+              <InputSampleRate>100.0</InputSampleRate>
+              <Factor>1</Factor>
+              <Offset>0</Offset>
+              <Delay>0.0</Delay>
+              <Correction>0.0</Correction>
+            </Decimation>
+            <StageGain>
+              <Value>1000000.0</Value>
+              <Frequency>0.0</Frequency>
+            </StageGain>
+          </Stage>
+        </Response>
+      </Channel>
+      <Channel code="HHN" startDate="2017-09-12T00:00:00Z" endDate="2019-12-31T00:00:00Z" restrictedStatus="closed" locationCode="">
+        <Latitude>46.57634</Latitude>
+        <Longitude>11.16347</Longitude>
+        <Elevation>666.0</Elevation>
+        <Depth>0.0</Depth>
+        <Azimuth>0.0</Azimuth>
+        <Dip>0.0</Dip>
+        <SampleRate>100.0</SampleRate>
+        <SampleRateRatio>
+          <NumberSamples>100</NumberSamples>
+          <NumberSeconds>1</NumberSeconds>
+        </SampleRateRatio>
+        <StorageFormat>Steim2</StorageFormat>
+        <ClockDrift>0.0</ClockDrift>
+        <Sensor resourceId="Sensor/20171204141244.731837.6">
+          <Type>BB</Type>
+          <Description>GFZ:ZS2017:CMG-3ESP/60/g=2000</Description>
+          <Manufacturer>Guralp</Manufacturer>
+          <Model>CMG-3ESP/60</Model>
+          <SerialNumber>0077</SerialNumber>
+        </Sensor>
+        <DataLogger resourceId="Datalogger/20171204141244.748989.8">
+          <Type>EarthData</Type>
+          <Description>GFZ:ZS2017:EDR210/g=1000000</Description>
+          <Manufacturer>EarthData</Manufacturer>
+          <SerialNumber>3118</SerialNumber>
+        </DataLogger>
+        <Response>
+          <InstrumentSensitivity>
+            <Value>2000000000.0</Value>
+            <Frequency>0.1</Frequency>
+            <InputUnits>
+              <Name>M/S</Name>
+            </InputUnits>
+            <OutputUnits>
+              <Name>COUNTS</Name>
+            </OutputUnits>
+          </InstrumentSensitivity>
+          <Stage number="1">
+            <PolesZeros resourceId="ResponsePAZ/20171204141244.732091.7" name="GFZ:ZS2017:CMG-3ESP/60/g=2000">
+              <InputUnits>
+                <Name>M/S</Name>
+              </InputUnits>
+              <OutputUnits>
+                <Name>V</Name>
+              </OutputUnits>
+              <PzTransferFunctionType>LAPLACE (RADIANS/SECOND)</PzTransferFunctionType>
+              <NormalizationFactor>1.0</NormalizationFactor>
+              <NormalizationFrequency>1.0</NormalizationFrequency>
+              <Zero number="2">
+                <Real>0.0</Real>
+                <Imaginary>0.0</Imaginary>
+              </Zero>
+              <Zero number="3">
+                <Real>0.0</Real>
+                <Imaginary>0.0</Imaginary>
+              </Zero>
+              <Pole number="0">
+                <Real>-0.074008</Real>
+                <Imaginary>0.074032</Imaginary>
+              </Pole>
+              <Pole number="1">
+                <Real>-0.074008</Real>
+                <Imaginary>-0.074032</Imaginary>
+              </Pole>
+            </PolesZeros>
+            <StageGain>
+              <Value>2000.0</Value>
+              <Frequency>0.1</Frequency>
+            </StageGain>
+          </Stage>
+          <Stage number="2">
+            <Coefficients>
+              <InputUnits>
+                <Name>V</Name>
+              </InputUnits>
+              <OutputUnits>
+                <Name>COUNTS</Name>
+              </OutputUnits>
+              <CfTransferFunctionType>DIGITAL</CfTransferFunctionType>
+            </Coefficients>
+            <Decimation>
+              <InputSampleRate>100.0</InputSampleRate>
+              <Factor>1</Factor>
+              <Offset>0</Offset>
+              <Delay>0.0</Delay>
+              <Correction>0.0</Correction>
+            </Decimation>
+            <StageGain>
+              <Value>1000000.0</Value>
+              <Frequency>0.0</Frequency>
+            </StageGain>
+          </Stage>
+        </Response>
+      </Channel>
+      <Channel code="HHE" startDate="2017-09-12T00:00:00Z" endDate="2019-12-31T00:00:00Z" restrictedStatus="closed" locationCode="">
+        <Latitude>46.57634</Latitude>
+        <Longitude>11.16347</Longitude>
+        <Elevation>666.0</Elevation>
+        <Depth>0.0</Depth>
+        <Azimuth>90.0</Azimuth>
+        <Dip>0.0</Dip>
+        <SampleRate>100.0</SampleRate>
+        <SampleRateRatio>
+          <NumberSamples>100</NumberSamples>
+          <NumberSeconds>1</NumberSeconds>
+        </SampleRateRatio>
+        <StorageFormat>Steim2</StorageFormat>
+        <ClockDrift>0.0</ClockDrift>
+        <Sensor resourceId="Sensor/20171204141244.731837.6">
+          <Type>BB</Type>
+          <Description>GFZ:ZS2017:CMG-3ESP/60/g=2000</Description>
+          <Manufacturer>Guralp</Manufacturer>
+          <Model>CMG-3ESP/60</Model>
+          <SerialNumber>0077</SerialNumber>
+        </Sensor>
+        <DataLogger resourceId="Datalogger/20171204141244.748989.8">
+          <Type>EarthData</Type>
+          <Description>GFZ:ZS2017:EDR210/g=1000000</Description>
+          <Manufacturer>EarthData</Manufacturer>
+          <SerialNumber>3118</SerialNumber>
+        </DataLogger>
+        <Response>
+          <InstrumentSensitivity>
+            <Value>2000000000.0</Value>
+            <Frequency>0.1</Frequency>
+            <InputUnits>
+              <Name>M/S</Name>
+            </InputUnits>
+            <OutputUnits>
+              <Name>COUNTS</Name>
+            </OutputUnits>
+          </InstrumentSensitivity>
+          <Stage number="1">
+            <PolesZeros resourceId="ResponsePAZ/20171204141244.732091.7" name="GFZ:ZS2017:CMG-3ESP/60/g=2000">
+              <InputUnits>
+                <Name>M/S</Name>
+              </InputUnits>
+              <OutputUnits>
+                <Name>V</Name>
+              </OutputUnits>
+              <PzTransferFunctionType>LAPLACE (RADIANS/SECOND)</PzTransferFunctionType>
+              <NormalizationFactor>1.0</NormalizationFactor>
+              <NormalizationFrequency>1.0</NormalizationFrequency>
+              <Zero number="2">
+                <Real>0.0</Real>
+                <Imaginary>0.0</Imaginary>
+              </Zero>
+              <Zero number="3">
+                <Real>0.0</Real>
+                <Imaginary>0.0</Imaginary>
+              </Zero>
+              <Pole number="0">
+                <Real>-0.074008</Real>
+                <Imaginary>0.074032</Imaginary>
+              </Pole>
+              <Pole number="1">
+                <Real>-0.074008</Real>
+                <Imaginary>-0.074032</Imaginary>
+              </Pole>
+            </PolesZeros>
+            <StageGain>
+              <Value>2000.0</Value>
+              <Frequency>0.1</Frequency>
+            </StageGain>
+          </Stage>
+          <Stage number="2">
+            <Coefficients>
+              <InputUnits>
+                <Name>V</Name>
+              </InputUnits>
+              <OutputUnits>
+                <Name>COUNTS</Name>
+              </OutputUnits>
+              <CfTransferFunctionType>DIGITAL</CfTransferFunctionType>
+            </Coefficients>
+            <Decimation>
+              <InputSampleRate>100.0</InputSampleRate>
+              <Factor>1</Factor>
+              <Offset>0</Offset>
+              <Delay>0.0</Delay>
+              <Correction>0.0</Correction>
+            </Decimation>
+            <StageGain>
+              <Value>1000000.0</Value>
+              <Frequency>0.0</Frequency>
+            </StageGain>
+          </Stage>
+        </Response>
+      </Channel>
+    </Station>
+  </Network>
+</FDSNStationXML>    
