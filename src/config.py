@@ -49,7 +49,7 @@ class PinkyConfig(Object):
 
     imputation = Imputation.T(
         optional=True, help='How to mask and fill gaps')
-    
+
     reference_station = String.T(
         optional=True,
         help='define the stations used as a reference location as NSL string')
@@ -92,15 +92,16 @@ class PinkyConfig(Object):
 
     def __init__(self, *args, **kwargs):
         super(PinkyConfig, self).__init__(*args, **kwargs)
+
+    def setup(self):
+
         stations = load_stations(self.fn_stations)
-        print(stations)
         self.targets = stations_to_targets(stations)
 
         if not self.reference_target:
             targets_by_code = {'.'.join(t.codes[:3]): t for t in self.targets}
             self.reference_target = targets_by_code[self.reference_station]
 
-    def setup(self):
 
         self.data_generator.set_config(self)
         if self.normalize_labels:
@@ -109,12 +110,12 @@ class PinkyConfig(Object):
             # Better store normalization data during training to recycle at
             # prediction time.
             self._label_median = num.median(
-                    num.array(list(
-                        self.data_generator.iter_labels())), axis=0)
+                num.array(list(
+                    self.data_generator.iter_labels())), axis=0)
 
             self._label_scale = num.mean(num.std(
-                    num.array(list(
-                        self.data_generator.iter_labels())), axis=0))
+                num.array(list(
+                    self.data_generator.iter_labels())), axis=0))
 
         if self.evaluation_data_generator:
             self.evaluation_data_generator.set_config(self)

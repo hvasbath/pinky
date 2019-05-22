@@ -825,16 +825,17 @@ class SynthesizerData(DataGenerator):
     source_config = SourceConfig.T(
         default=SourceConfig.D(),
         help='Configuration of Source objects')
-    store_id = String.T(optional=True)
+    store_id = String.T(optional=True, default='to be filled')
     center_sources = Bool.T(
         default=False,
         help='Transform the center of sources to the center of stations')
     filterer = Filter.T(default=Filter.D())
     taperer = ArrivalTaper.T(default=ArrivalTaper.D())
-    wavename = String.T(help='Tabulated phase as defined in store')
+    wavename = String.T(default='any_P', help='Tabulated phase as defined in store')
 
-    channels = List.T(String.T())
-    store_superdirs = String.T(default='')
+    channels = List.T(String.T(), default=['N', 'E', 'Z'])
+
+    store_superdirs = String.T(default='./')
     onset_phase = String.T(default='first(p|P)')
     reftime = String.T(
         optional=True,
@@ -860,6 +861,9 @@ class SynthesizerData(DataGenerator):
         if self.store_id:
             for t in self.config.targets:
                 t.store_id = self.store_id
+
+        # setting target codes to Pinky channel info
+        self.config.channels = [t.codes for t in self.config.targets]
 
         self.engine = LocalEngine(store_superdirs=[self.store_superdirs])
 
@@ -906,6 +910,11 @@ class SynthesizerData(DataGenerator):
             source.north_shift, source.east_shift, source.depth,
             source.time, source.magnitude,
             source.u, source.v, source.kappa, source.sigma, source.h)
+
+    def iter_labels(self):
+        '''Iterate through labels.'''
+        for i, label in self.filter_iter(self.extract_labels(self.source)):
+            yield label
 
     def iter_examples_and_labels(self):
 

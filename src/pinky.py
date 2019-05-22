@@ -49,7 +49,7 @@ def main():
     parser.add_argument('--force', action='store_true')
 
     args = parser.parse_args()
-    if not (args.config or args.configs):
+    if not (args.config or args.configs or args.new_config):
         parser.print_help()
         sys.exit('\n use `--config` to load a configuration file\n')
 
@@ -63,6 +63,30 @@ def main():
     else:
         logging.basicConfig(stream=sys.stdout, level=logging.INFO)
         logger.setLevel(logging.INFO)
+
+    if args.new_config:
+        from pinky.data import SynthesizerData
+        from pinky.config import PinkyConfig
+
+        fn_config = args.new_config
+        workdir = os.getcwd()
+        filename = os.path.join(workdir, fn_config + '.yaml')
+        if os.path.exists(filename) and not args.force:
+            print('Aborting! File exists: %s' % filename)
+            sys.exit()
+
+        pc = PinkyConfig(data_generator=SynthesizerData())
+
+        model = Model(
+            config=pc)
+
+        model.regularize()
+        model.validate()
+
+        print(model)
+
+        logger.info('Saving config file to %s' % filename)
+        model.dump(filename=filename)
 
     configs = []
     if args.config:
@@ -135,18 +159,6 @@ def main():
             logger.info('Reading data from %s' % args.from_tfrecord)
             model.config.data_generator = TFRecordData(
                     fn_tfrecord=args.from_tfrecord)
-
-        elif args.new_config:
-            fn_config = args.new_config
-            if os.path.exists(fn_config):
-                print('file exists: %s' % fn_config)
-                sys.exit()
-
-            model = Model(
-                tf_config=tf_config,
-                data_generator=GFSwarmData.get_example())
-
-            model.regularize()
 
         if args.train and args.optimize:
             print('Can only use either --train or --optimize')

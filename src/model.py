@@ -30,8 +30,10 @@ class Layer(Object):
     Checkout https://pyrocko.org/docs/current/# for more information.
     '''
 
-    name = String.T(help='Identifies the model')
-    n_filters = Int.T(help='Number of output filters')
+    name = String.T(
+        help='Identifies the model',
+        default='model name')
+    n_filters = Int.T(default=2, help='Number of output filters')
     activation = String.T(
             default='leaky_relu', help='activation function of tf.nn')
 
@@ -51,7 +53,7 @@ class Layer(Object):
 class CNNLayer(Layer):
 
     '''2D CNN layer'''
-    kernel_width = Int.T()
+    kernel_width = Int.T(default=10)
     kernel_height = Int.T(optional=True,
         help='If this parameter is not set use *N* channels as height.')
 
@@ -204,7 +206,10 @@ class Model(Object):
 
     tf.logging.set_verbosity(tf.logging.INFO)
     force_dropout = Bool.T(optional=True)
-    layers = List.T(Layer.T(), help='A list of `Layer` instances.')
+    layers = List.T(
+        Layer.T(),
+        default=[CNNLayer.D(), DenseLayer.D()],
+        help='A list of `Layer` instances.')
 
     def __init__(self, tf_config=None, **kwargs):
         ''' '''
