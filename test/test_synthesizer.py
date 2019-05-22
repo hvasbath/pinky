@@ -6,6 +6,8 @@ import unittest
 import logging
 
 from pyrocko import util
+from pyrocko.trace import snuffle
+
 from pinky.data import SourceConfig, SynthesizerData
 from pinky.config import PinkyConfig
 
@@ -31,9 +33,13 @@ class TestSynthesizer(unittest.TestCase):
             wavename='any_P',
             store_id='crust2_m5',
             store_superdirs=store_superdirs,
-            channels=['N', 'E', 'Z'])
+            channels=['N', 'E', 'Z'],
+            center_sources=True)   
 
     def test_synthesizer_init(self):
+        self.sc.source_config.set_ranges()
+        print(self.sc.source_config.get_uniform_random())
+        self.sc.update_source_randomly       
         print(self.sc)
 
     def test_synthesizer_setup(self):
@@ -44,8 +50,10 @@ class TestSynthesizer(unittest.TestCase):
             reference_station='ZS.D085.'
             )
         self.sc.set_config(self.pc)
+        arr_trcs, label = next(self.sc.iter_examples_and_labels())
+        #snuffle(trcs)
 
 
 if __name__ == "__main__":
-    util.setup_logging('test_synthesizer', 'info')
+    util.setup_logging('test_synthesizer', 'warning')
     unittest.main()
