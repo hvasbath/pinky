@@ -39,7 +39,10 @@ class Layer(Object):
 
     def get_activation(self):
         '''Return activation function from tensorflow.nn'''
-        return getattr(tf.nn, self.activation)
+        if self.activation:
+            return getattr(tf.nn, self.activation)
+        else:
+            return None
 
     def visualize_kernel(self, estimator, index=0, save_path=None):
         '''Subclass this method for plotting kernels.'''

@@ -837,6 +837,9 @@ class SynthesizerData(DataGenerator):
     taperer = ArrivalTaper.T(default=ArrivalTaper.D())
     wavename = String.T(default='any_P', help='Tabulated phase as defined in store')
 
+    example_size = Int.T(
+        default=100,
+        help='Number of different random sources to use for synthetic data generation')
     channels = List.T(String.T(), default=['N', 'E', 'Z'])
 
     store_superdirs = String.T(default='./')
@@ -855,14 +858,16 @@ class SynthesizerData(DataGenerator):
 
         super(SynthesizerData, self).__init__(*args, **kwargs)
 
+        if not self.source_config:
+            if self.fn_source_config:
+                logger.info('Loading stored config')
+                self.source_config = guts.load(filename=self.fn_source_config)
+            else:
+                logger.info('Using default config!')
+
+            self.source_config.set_ranges()
+
     def setup(self):
-        if self.fn_source_config:
-            logger.info('Loading stored config')
-            self.source_config = guts.load(filename=self.fn_source_config)
-        else:
-            logger.info('Using default config!')
-         
-        self.source_config.set_ranges()
 
         if self.store_id:
             for t in self.config.targets:
@@ -923,7 +928,7 @@ class SynthesizerData(DataGenerator):
             return UNLABELED
         return (
             source.north_shift, source.east_shift, source.depth,
-            source.time, source.magnitude,
+            source.magnitude,
             source.u, source.v, source.kappa, source.sigma, source.h)
 
     def iter_labels(self):
@@ -933,32 +938,34 @@ class SynthesizerData(DataGenerator):
 
     def iter_examples_and_labels(self):
 
-        self.update_source_randomly()
-        arrival_times_tracing = num.array(
-            [get_phase_arrival_time(
-                engine=self.engine, source=self.source,
-                target=target, wavename=self.wavename)
-                for target in self.config.targets])
+        for i in range(self.example_size):
+            self.update_source_randomly()
+            print(self.source)
+            arrival_times_tracing = num.array(
+                [get_phase_arrival_time(
+                    engine=self.engine, source=self.source,
+                    target=target, wavename=self.wavename)
+                    for target in self.config.targets])
 
 
-        if self.arrival_times_std:
-            arrival_times += num.random.normal(
-                scale=self.arrival_times_std, size=self.ntargets)
+            if self.arrival_times_std:
+                arrival_times += num.random.normal(
+                    scale=self.arrival_times_std, size=self.ntargets)
 
-        arrival_times = num.ones(self.ntargets, dtype='float64') * \
-                        arrival_times_tracing.min()
+            arrival_times = num.ones(self.ntargets, dtype='float64') * \
+                            arrival_times_tracing.min()
 
-        chunk, _ = seis_synthetics(
-            self.engine, [self.source], self.config.targets,
-            arrival_taper=self.taperer,
-            wavename=self.wavename, filterer=self.filterer,
-            plot=False, nprocs=1, outmode='array',
-            pre_stack_cut=False, taper_tolerance_factor=0.,
-            arrival_times=arrival_times, chop_bounds=['b', 'c'])
+            chunk, _ = seis_synthetics(
+                self.engine, [self.source], self.config.targets,
+                arrival_taper=self.taperer,
+                wavename=self.wavename, filterer=self.filterer,
+                plot=False, nprocs=1, outmode='array',
+                pre_stack_cut=False, taper_tolerance_factor=0.,
+                arrival_times=arrival_times, chop_bounds=['b', 'c'])
 
-        label = self.extract_labels(self.source)
+            label = self.extract_labels(self.source)
 
-        yield chunk, label
+            yield chunk, label
 
 
 class SeismosizerData(DataGenerator):

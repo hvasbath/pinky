@@ -100,7 +100,7 @@ class PinkyConfig(Object):
         stations = load_stations(self.fn_stations)
         self.targets = stations_to_targets(stations)
 
-        if not self.reference_target:
+        if not self.reference_target and self.reference_station:
             targets_by_code = {'.'.join(t.codes[:3]): t for t in self.targets}
             self.reference_target = targets_by_code[self.reference_station]
 
