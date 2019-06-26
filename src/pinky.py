@@ -100,9 +100,9 @@ def main():
         model = guts.load(filename=config)
         logger.info('Start processing model: %s (%i / %i)' % (
             model.name, iconfig+1, len(configs)))
-
+        print('nach loading n_samples', model.config._n_samples)
         model.config.setup()
-
+        print('nach setup n_samples', model.config._n_samples)
         if args.tfdebug:
             model.enable_debugger()
 

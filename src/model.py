@@ -94,6 +94,7 @@ class CNNLayer(Layer):
         '''
         _, n_channels, n_samples, _ = input.shape
 
+        print('inshape', input.shape)
         logger.debug('input shape %s' % input.shape)
         kernel_height = self.kernel_height or n_channels
 
@@ -112,6 +113,7 @@ class CNNLayer(Layer):
             name=self.name,
             **kwargs)
 
+        print('after conv shape', input.shape)
         input = tf.layers.max_pooling2d(input,
             pool_size=(self.pool_width, self.pool_height),
             strides=(1, 1), name=self.name+'maxpool')

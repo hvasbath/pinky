@@ -963,6 +963,7 @@ class SynthesizerData(DataGenerator):
                 pre_stack_cut=False, taper_tolerance_factor=0.,
                 arrival_times=arrival_times, chop_bounds=['b', 'c'])
 
+            chunk = chunk.astype('float32')
             label = self.extract_labels(self.source)
 
             yield chunk, label
