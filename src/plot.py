@@ -215,13 +215,18 @@ def show_kernels_dense(weights, name=None):
 
 
 def show_kernels(weights, name=None):
+
     n_columns = 8
     n_weights = weights.shape[-1]
-    n_rows = int(n_weights // n_columns)
+    if n_weights < n_columns:
+        n_rows = 1
+    else:
+        n_rows = int(n_weights // n_columns)
+
     fig, axs = plt.subplots(n_rows, n_columns, figsize=FIG_SIZE)
 
     axs = [ax for iax in axs for ax in iax]
-    
+
     for iweight in range(n_weights):
         axs[iweight].imshow(weights[..., iweight], cmap='gray')
     

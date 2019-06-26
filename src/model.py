@@ -94,7 +94,6 @@ class CNNLayer(Layer):
         '''
         _, n_channels, n_samples, _ = input.shape
 
-        print('inshape', input.shape)
         logger.debug('input shape %s' % input.shape)
         kernel_height = self.kernel_height or n_channels
 
@@ -113,9 +112,8 @@ class CNNLayer(Layer):
             name=self.name,
             **kwargs)
 
-        print('after conv shape', input.shape)
         input = tf.layers.max_pooling2d(input,
-            pool_size=(self.pool_width, self.pool_height),
+            pool_size=(self.pool_height, self.pool_width),
             strides=(1, 1), name=self.name+'maxpool')
 
         if logger.getEffectiveLevel() == logging.DEBUG:
@@ -272,7 +270,7 @@ class Model(Object):
         delete_if_exists(self.get_summary_outdir())
         self.clear_model()
 
-    def denormalize_location(self, items):
+    def denormalize_labels(self, items):
         '''Convert normalized carthesian location to true location.'''
         return self.config.denormalize_label(items)
 
@@ -340,19 +338,20 @@ class Model(Object):
         if mode == tf.estimator.ModeKeys.PREDICT:
             return tf.estimator.EstimatorSpec(mode,
                     predictions = {
-                        'predictions': self.denormalize_location(predictions),
+                        'predictions': self.denormalize_labels(predictions),
                         'level': level})
 
         # do not denormalize labels and predictions for loss
         loss = tf.losses.mean_squared_error(labels, predictions)
 
         # transform to carthesian coordiantes
-        labels = self.denormalize_location(labels)
-        predictions = self.denormalize_location(predictions)
+        labels = self.denormalize_labels(labels)
+        predictions = self.denormalize_labels(predictions)
 
         predictions = tf.transpose(predictions) 
         labels = tf.transpose(labels)
         errors = predictions - labels
+
         abs_errors = tf.abs(errors)
         variable_summaries(errors[0], 'error_abs_x')
         variable_summaries(errors[1], 'error_abs_y')
@@ -518,7 +517,7 @@ class Model(Object):
             self.est = tf.estimator.Estimator(
                 model_fn=self.model, model_dir=self.get_outdir())
             labels = [l for _, l in self.config.evaluation_data_generator.generate()]
-            labels = self.denormalize_location(num.array(labels))
+            labels = self.denormalize_labels(num.array(labels))
 
             all_predictions = []
 
@@ -563,7 +562,7 @@ class Model(Object):
 
         save_name = pjoin(self.get_plot_path(), 'mislocation')
         predictions = num.array(predictions)
-        labels = self.denormalize_location(num.array(labels))
+        labels = self.denormalize_labels(num.array(labels))
 
         text_labels = None
         if annotate:
@@ -644,8 +643,8 @@ class Model(Object):
         '''Visualizes all activation maps at given *index* of all layers.'''
         save_path = pjoin(self.get_summary_outdir(), 'kernels')
         ensure_dir(save_path)
-        for layer in self.layers:
-            plot.getActivations(layer, stimuli)
+        #for layer in self.layers:
+        #    plot.getActivations(layer, stimuli)
 
     def save_model_in_summary(self):
         '''Dump neural network configuration to summary directory as YAML.'''

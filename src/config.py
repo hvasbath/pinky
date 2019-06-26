@@ -111,13 +111,12 @@ class PinkyConfig(Object):
             # for training is required in any case at the moment!
             # Better store normalization data during training to recycle at
             # prediction time.
+            labels = list(self.data_generator.iter_labels())
             self._label_median = num.median(
-                num.array(list(
-                    self.data_generator.iter_labels())), axis=0)
+                num.array(labels), axis=0)
 
             self._label_scale = num.mean(num.std(
-                num.array(list(
-                    self.data_generator.iter_labels())), axis=0))
+                num.array(labels), axis=0))
 
         if self.evaluation_data_generator:
             self.evaluation_data_generator.set_config(self)
@@ -148,7 +147,6 @@ class PinkyConfig(Object):
         generator. Note that this assumes that the evaluation data generator
         contains identical shaped examples.'''
         example, _ = next(self.data_generator.generate())
-        print('set n_sample shape', example.shape)
         self._n_samples = example.shape[1]
         assert(example.shape == self.tensor_shape)
 
@@ -195,10 +193,8 @@ class PinkyConfig(Object):
         '''Return a tuple containing the shape of feature arrays and number of
         labels.
         '''
-        print('pconfig tensor_shape', self.tensor_shape)
         return (self.tensor_shape, self.n_classes)
 
     @property
     def tensor_shape(self):
-        print('pconfig tensor_shape', self._n_samples)
         return (self.n_channels, self._n_samples)

@@ -965,7 +965,6 @@ class SynthesizerData(DataGenerator):
 
             chunk = chunk.astype('float32')
             label = self.extract_labels(self.source)
-
             yield chunk, label
 
 
