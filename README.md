@@ -22,4 +22,5 @@ Invoke pinky with `--debug` to enable keep track of weight matrices in
 (tensorboard[https://www.tensorflow.org/guide/summaries_and_tensorboard].
 
 To inspect summary open tensorboard with the result_dir:
-tensorboard --logdir=$result_dir --port=portnumber
+
+    tensorboard --logdir=$result_dir --port=portnumber
